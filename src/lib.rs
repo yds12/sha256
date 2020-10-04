@@ -57,12 +57,12 @@ pub fn from_string(hash_me: &str) -> String {
     // multiple of 512
     let n_zeroes = (512 - ((bits_len + 65) % 512)) % 512;
     let mut zeroes = BitVec::from_elem(n_zeroes.try_into().unwrap(), false);
-    bits.append(&mut zeroes);
+    bits.extend(&mut zeroes.iter());
 
     // append L as a 64-bit big-endian integer (total size now is multiple
     // of 512 bits)
     let mut size_bits = BitVec::from_bytes(&bits_len.to_be_bytes());
-    bits.append(&mut size_bits);
+    bits.extend(&mut size_bits.iter());
     println!("{:?}", bits);
 
     String::new()
